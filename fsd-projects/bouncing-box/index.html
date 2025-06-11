@@ -47,7 +47,7 @@
 
 			// Every 50 milliseconds, call the update Function (see below)
 			setInterval(update, 50);
-
+				
 			// Every time the box is clicked, call the handleBoxClick Function (see below)
 			box.on('click', handleBoxClick);
 
@@ -67,6 +67,8 @@
 
 			// TODO 2 - Variable declarations 
             var positionX = 0;
+            var points = 0;
+			var speed = 10;
 
 
 
@@ -78,10 +80,16 @@
 			turn it around! 
 			*/
 			function update() {
-				positionX = PositionX + 10;
+				positionX = positionX + speed;
 				
-				moveBoxTo(boardWidth);
-
+				moveBoxTo(positionX);
+			
+				if (positionX > boardWidth) {// Code to reverse speed goes here
+			speed = speed * -1;
+				}
+				else if (positionX < 0) {// Code to reverse speed goes here
+				speed = speed * -1;	
+				}
 			};
 
 			/* 
@@ -90,8 +98,10 @@
 			the left side of the screen.
 			*/
 			function handleBoxClick() {
-
-
+            positionX = 0;
+			points = points + 1; // Adds 1 to points
+            changeBoxText(points);
+			speed = speed + 3; // Adds 3 to speed
 			};
 
 
