@@ -1,0 +1,9 @@
+# Query: max-head
+# ContextLines: 1
+
+1 result - 1 file
+
+fsd-projects/platformer/setup.js:
+  98    kennedi: { image: "images/collectables/kennedi-head.png" },
+  99:   max: { image: "images/collectables/.png" },
+  100    steve: { image: "images/collectables/steve-head.png" },
