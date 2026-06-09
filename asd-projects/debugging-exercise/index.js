@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  alert("Page loaded: You may experience slight lag during the game!");
   
 /////////////////
 // initialization
@@ -6,14 +7,14 @@ $(document).ready(function () {
 
 // this section initializes some variables that will be used throughout the program
 var doubleMaxSpeed = 5;
-var maxGhosts = 10;
+var maxGhosts = 17;
 var $board = $("#board");
 var boardWidth = $($board).width();
 var boardHeight = $($board).height();
 var ghosts = [];
-var ghostRadius = 10;
+var ghostRadius = 15; // the radius of the ghost image in pixels
 // modify these values if you want faster moving ghosts or a shorter countdown timer
-const FPS = 25;
+const FPS = 30;
 const initialDelay = 5_000;
 
 //////////
