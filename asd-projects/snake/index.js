@@ -29,6 +29,13 @@ var KEY = {
   DOWN: 40,
 };
 
+// Rainbow Snake Challenge
+var colors = ["red", "orange", "yellow", "green", "blue", "purple"];
+var colorIndex = 0;
+
+// Reverse Controls Challenge (commented out)
+// var isReversed = false;
+
 // interval variable required for stopping the update function when the game ends
 var updateInterval;
 
@@ -190,7 +197,7 @@ function hasCollidedWithApple() {
     return true;
   } else {
     return false;
-  } 
+  }
 }
 
 function handleAppleCollision() {
@@ -206,6 +213,13 @@ function handleAppleCollision() {
   var column = snake.tail.column;
 
   makeSnakeSquare(row, column);
+  snake.tail.element.css("backgroundColor", colors[colorIndex]);
+  colorIndex = (colorIndex + 1) % colors.length;
+
+  // Reverse Controls Challenge: Toggle reverse on multiples of 10
+  // if (score % 10 === 0) {
+  //   isReversed = !isReversed;
+  // }
 }
 
 function hasCollidedWithSnake() {
@@ -311,7 +325,22 @@ function makeSnakeSquare(row, column) {
 */
 function handleKeyDown(event) {
   // TODO 7: make the handleKeyDown function register which key is pressed
+  // Reverse Controls Challenge: Reverse the key mapping if isReversed is true
+  // if (isReversed) {
+  //   if (event.which === KEY.LEFT) {
+  //     activeKey = KEY.RIGHT;
+  //   } else if (event.which === KEY.RIGHT) {
+  //     activeKey = KEY.LEFT;
+  //   } else if (event.which === KEY.UP) {
+  //     activeKey = KEY.DOWN;
+  //   } else if (event.which === KEY.DOWN) {
+  //     activeKey = KEY.UP;
+  //   } else {
+  //     activeKey = event.which;
+  //   }
+  // } else {
   activeKey = event.which;
+  // }
   console.log(activeKey);
 
   // If a valid direction key is pressed, start the game
