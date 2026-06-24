@@ -1,18 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Title</title>
     <!-- Load CSS files -->
-    <link rel="stylesheet" type="text/css" href="index.css">
-    
+    <link rel="stylesheet" type="text/css" href="index.css" />
+
     <!-- Load JavaScript files -->
     <script src="jquery.min.js"></script>
     <script src="index.js"></script>
   </head>
-  
+
   <body>
-    <div id='board'>
-      <div id='gameItem'></div>
+    <div id="board">
+      <div id="walker"></div>
+      <div id="fps-counter">
+        FPS: <span id="fps-value">0</span>, Frame time:
+        <span id="frame-time-value">0ms</span>
+      </div>
+      <div id="date-time">Date/time</div>
+    </div>
+    <div id="dvd-controls">
+      <button id="dvd-button">Start DVD move</button>
+      <label id="dvd-speed-label"
+        >Speed: <span id="dvd-speed-value">2x</span></label
+      >
+      <input
+        id="dvd-speed-slider"
+        type="range"
+        min="1"
+        max="10"
+        step="1"
+        value="2"
+      />
+    </div>
+    <div id="runtime-counter">
+      Runtime: <span id="runtime-value">0y 0mo 0d 0h 0m 0s 0ms</span>
+    </div>
+    <div id="hold-counter">
+      Key hold time: <span id="hold-value">0y 0mo 0d 0h 0m 0s 0ms</span>
+    </div>
+    <div id="key-counter">Keys pressed: <span id="counter-value">0</span></div>
+    <div id="wall-counter">Wall hits: <span id="wall-hit-value">0</span></div>
+    <div id="dvd-hit-counter">
+      DVD wall hits: <span id="dvd-hit-value">0</span>
+    </div>
+    <div id="dvd-time-counter">
+      DVD active time: <span id="dvd-time-value">0y 0mo 0d 0h 0m 0s 0ms</span>
+    </div>
+    <div id="walker-click-counter">
+      Walker clicks: <span id="walker-click-value">0</span>
+    </div>
+    <div id="position-counter">
+      Position: <span id="position-value">0, 0</span>
+    </div>
+    <div id="velocity-counter">
+      Velocity: <span id="velocity-value">0, 0</span>
+    </div>
+    <div id="direction-counter">
+      Direction: <span id="direction-value">none</span>
+    </div>
+    <div id="active-keys-counter">
+      Active keys: <span id="active-keys-value">None</span>
+    </div>
+    <div id="collision-counter">
+      Collision: <span id="collision-value">None</span>
+    </div>
+    <div id="distance-counter">
+      Distance traveled: <span id="distance-value">0px</span>
+    </div>
+    <div id="last-key-counter">
+      Last key: <span id="last-key-value">None</span>
+    </div>
+    <div id="mouse-counter">
+      Mouse position: <span id="mouse-value">0, 0</span>
     </div>
   </body>
 </html>

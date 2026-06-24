@@ -1,10 +1,9 @@
-
 body {
   background-color: darkgreen;
 }
 
 #board {
-  width: 440px;
+  width: 560px;
   height: 440px;
   border: 1px solid white;
   background-color: black;
@@ -16,6 +15,110 @@ body {
   width: 50px;
   height: 50px;
   position: absolute;
-/*   left: 100px; */  /* Uncomment if you want to set a "starting" position */
-/*   top: 100px;  */  /* Uncomment if you want to set a "starting" position */
+  /*   left: 100px; */ /* Uncomment if you want to set a "starting" position */
+  /*   top: 100px;  */ /* Uncomment if you want to set a "starting" position */
+}
+
+#walker {
+  width: 50px;
+  height: 50px;
+  background-color: green;
+  position: absolute;
+}
+
+#board {
+  width: 560px;
+  height: 440px;
+  border: 1px solid white;
+  background-color: black;
+  position: relative;
+}
+
+#date-time {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: white;
+  font-size: 14px;
+  text-align: right;
+  padding: 3px 6px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
+#fps-counter {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  color: white;
+  font-size: 14px;
+  text-align: left;
+  padding: 3px 6px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
+#dvd-controls {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#dvd-button {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#dvd-speed-slider {
+  width: 120px;
+}
+
+#dvd-speed-label {
+  color: white;
+  font-size: 18px;
+}
+
+#runtime-counter,
+#key-counter,
+#hold-counter,
+#wall-counter,
+#dvd-hit-counter,
+#dvd-time-counter,
+#walker-click-counter,
+#position-counter,
+#velocity-counter,
+#direction-counter,
+#active-keys-counter,
+#collision-counter,
+#distance-counter,
+#last-key-counter,
+#mouse-counter {
+  margin-top: 12px;
+  color: white;
+  font-size: 18px;
+  width: 560px;
+  text-align: left;
+  padding-left: 8px;
+}
+
+#runtime-counter span,
+#key-counter span,
+#hold-counter span,
+#wall-counter span,
+#walker-click-counter span,
+#position-counter span,
+#velocity-counter span,
+#direction-counter span,
+#active-keys-counter span,
+#fps-counter span,
+#collision-counter span,
+#distance-counter span,
+#last-key-counter span,
+#mouse-counter span {
+  font-weight: bold;
+  color: #ffd700;
 }
