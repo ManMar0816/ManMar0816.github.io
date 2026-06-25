@@ -19,10 +19,13 @@ function runProgram() {
   var runTimeMilliseconds = 0;
   var distanceTraveled = 0;
   var walkerClickCount = 0;
+  var totalWalkerClicks = 0;
   var wallHitCount = 0;
   var dvdWallHitCount = 0;
   var dvdActiveMilliseconds = 0;
   var dvdMode = false;
+  var randomMode = false;
+  var changeOnWallHitMode = false;
   var dvdSpeed = 2;
   var isTouchingWall = false;
   var collisionStatus = "None";
@@ -82,11 +85,44 @@ function runProgram() {
   */
   $(document).on("keydown", handleKeyDown);
   $(document).on("keyup", handleKeyUp);
-  $("#walker").on("click", function () {
-    var randomColor = getRandomColor();
-    $(this).css("background-color", randomColor);
-    walkerClickCount += 1;
-    $("#walker-click-value").text(walkerClickCount);
+  $("#random-button").on("click", function () {
+    randomMode = !randomMode;
+    dvdMode = false;
+    if (randomMode) {
+      setRandomModeVelocity();
+      $(this).text("Random mode active");
+    } else {
+      walker.speedX = 0;
+      walker.speedY = 0;
+      $(this).text("Start random move");
+    }
+    $("#dvd-button").text("Start DVD move");
+    $("#change-button").text("Change color on wall hit");
+  });
+  $("#change-button").on("click", function () {
+    changeOnWallHitMode = !changeOnWallHitMode;
+    $(this).text(
+      changeOnWallHitMode ? "Color change active" : "Change color on wall hit",
+    );
+    if (!dvdMode && !randomMode) {
+      $("#dvd-button").text("Start DVD move");
+      $("#random-button").text("Start random move");
+    }
+  });
+  $(document).on("click", function (event) {
+    if ($(event.target).closest("#dvd-controls").length > 0) {
+      return;
+    }
+
+    totalWalkerClicks += 1;
+    $("#total-walker-click-value").text(totalWalkerClicks);
+
+    if ($(event.target).closest("#walker").length > 0) {
+      var randomColor = getRandomColor();
+      $("#walker").css("background-color", randomColor);
+      walkerClickCount += 1;
+      $("#walker-click-value").text(walkerClickCount);
+    }
   });
   $("#dvd-speed-slider").on("input change", function () {
     dvdSpeed = Number(this.value);
@@ -98,20 +134,34 @@ function runProgram() {
       if (walker.speedY !== 0) {
         walker.speedY = Math.sign(walker.speedY) * dvdSpeed;
       }
+    } else if (randomMode) {
+      if (walker.speedX !== 0 || walker.speedY !== 0) {
+        var currentAngle = Math.atan2(walker.speedY, walker.speedX);
+        walker.speedX = Math.cos(currentAngle) * dvdSpeed;
+        walker.speedY = Math.sin(currentAngle) * dvdSpeed;
+      }
     }
   });
   $("#dvd-button").on("click", function () {
-    dvdMode = true;
-    walker.speedX = Math.random() < 0.5 ? -dvdSpeed : dvdSpeed;
-    walker.speedY = Math.random() < 0.5 ? -dvdSpeed : dvdSpeed;
-    $(this).text("DVD mode active");
+    dvdMode = !dvdMode;
+    randomMode = false;
+    if (dvdMode) {
+      walker.speedX = Math.random() < 0.5 ? -dvdSpeed : dvdSpeed;
+      walker.speedY = Math.random() < 0.5 ? -dvdSpeed : dvdSpeed;
+      $(this).text("DVD mode active");
+    } else {
+      walker.speedX = 0;
+      walker.speedY = 0;
+      $(this).text("Start DVD move");
+    }
+    $("#random-button").text("Start random move");
+    $("#change-button").text("Change color on wall hit");
   });
   $("body").css("background-color", getRandomColor());
   $("#walker").css("background-color", getRandomColor());
-  $("#board").on("mousemove", function (event) {
-    var offset = $(this).offset();
-    mouseX = Math.floor(event.pageX - offset.left);
-    mouseY = Math.floor(event.pageY - offset.top);
+  $(document).on("mousemove", function (event) {
+    mouseX = event.pageX;
+    mouseY = event.pageY;
     $("#mouse-value").text(mouseX + ", " + mouseY);
   });
 
@@ -119,6 +169,16 @@ function runProgram() {
     return "#000000".replace(/0/g, function () {
       return (~~(Math.random() * 16)).toString(16);
     });
+  }
+
+  function changeWalkerAppearance() {
+    $("#walker").css("background-color", getRandomColor());
+  }
+
+  function setRandomModeVelocity() {
+    var angle = Math.random() * Math.PI * 2;
+    walker.speedX = Math.cos(angle) * dvdSpeed;
+    walker.speedY = Math.sin(angle) * dvdSpeed;
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -159,9 +219,16 @@ function runProgram() {
   Note: You can have multiple event handlers for different types of events.
   */
   function handleKeyDown(event) {
-    if (dvdMode) {
-      dvdMode = false;
-      $("#dvd-button").text("Start DVD move");
+    var isManualMovementKey =
+      event.which === KEY.LEFT ||
+      event.which === KEY.RIGHT ||
+      event.which === KEY.UP ||
+      event.which === KEY.DOWN ||
+      event.which === KEY.A ||
+      event.which === KEY.D;
+
+    if (isManualMovementKey) {
+      event.preventDefault();
     }
 
     if (!activeKeys[event.which]) {
@@ -595,6 +662,14 @@ function runProgram() {
       hasHitWallThisFrame = true;
     }
 
+    if (randomMode && hasHitWallThisFrame) {
+      setRandomModeVelocity();
+    }
+
+    if (changeOnWallHitMode && hasHitWallThisFrame) {
+      changeWalkerAppearance();
+    }
+
     if (dvdMode) {
       if (hasHitWallThisFrame) {
         dvdWallHitCount += 1;
@@ -608,10 +683,10 @@ function runProgram() {
       wallHitCount += 1;
       $("#wall-hit-value").text(wallHitCount);
       isTouchingWall = true;
-      collisionStatus = "Touching wall";
+      collisionStatus = randomMode ? "Random bouncing" : "Touching wall";
     } else if (!hasHitWallThisFrame) {
       isTouchingWall = false;
-      collisionStatus = "None";
+      collisionStatus = randomMode ? "Moving" : "None";
     }
   }
   function endGame() {
