@@ -21,8 +21,13 @@ function resetAndRender() {
 function applyAndRender() {
   // Multiple TODOs: Call your apply function(s) here
   //applyFilterNoBackground(reddify);
-  applyFilterNoBackground(decreaseBlue);
-  //applyFilterNoBackground(increaseGreenByBlue);
+  //applyFilterNoBackground(decreaseBlue);
+  applyFilterNoBackground(increaseGreenByBlue);
+  //applyFilter(reddify);
+  applyFilter(decreaseBlue);
+  //applyFilter(increaseGreenByBlue);
+  
+
 
   // do not change the below line of code
   render($("#display"), image);
@@ -92,3 +97,6 @@ var testArray3 = [100, 100, 100];
 increaseGreenByBlue(testArray3);
 console.log(testArray3); // Should show [100, 200, 100]
 // CHALLENGE code goes below here
+// function purplify(pixelArray) {
+//   pixelArray[PURPLE] = 200
+// } not gonna do i decided
